@@ -96,10 +96,10 @@ args = ["--stdio"]
 
 [[grammar]]
 name = "nlpplus"
-source = { git = "https://github.com/VisualText/tree-sitter-nlpplus", rev = "main" }
+source = { git = "https://github.com/VisualText/tree-sitter-nlpplus", rev = "b52cfecf565a9d5aa2e0fb0d181f6650fbe4232f" }
 ```
 
-Then run `hx --grammar fetch` and `hx --grammar build`. Finally, copy `queries/highlights.scm` to
+Use the latest commit for `rev`. Then run `hx --grammar fetch` and `hx --grammar build`. Finally, copy `queries/highlights.scm` to
 `~/.config/helix/runtime/queries/nlpplus/`.
 
 ## Development
