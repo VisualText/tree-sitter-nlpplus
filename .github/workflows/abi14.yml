@@ -1,0 +1,47 @@
+name: ABI 14 branch
+
+# Editors linked against an older tree-sitter library (Emacs 30's Windows
+# build, for one) can only load parsers generated for ABI 14. The abi-14
+# branch is main with every parser regenerated for that ABI.
+
+on:
+  push:
+    branches: [main]
+
+concurrency:
+  group: ${{github.workflow}}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  abi14:
+    name: Update the abi-14 branch
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+        with:
+          tree-sitter-ref: v0.27.0
+
+      - name: Generate the parsers for ABI 14
+        run: |
+          tree-sitter generate --abi 14
+          for g in dict kbb seq tree; do
+            (cd "$g" && tree-sitter generate --abi 14)
+          done
+
+      - name: Run tests
+        run: tree-sitter test
+
+      - name: Push the abi-14 branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b abi-14
+          git commit -qam "Generate the parsers for tree-sitter ABI 14 (from ${GITHUB_SHA::7})"
+          git push -f origin abi-14
