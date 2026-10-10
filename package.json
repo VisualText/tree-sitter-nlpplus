@@ -1,7 +1,7 @@
 {
   "name": "tree-sitter-nlpplus",
   "version": "0.1.0",
-  "description": "NLP++ grammar for tree-sitter",
+  "description": "NLP++ grammars for tree-sitter: pass files, dictionaries, knowledge bases, analyzer sequences and parse trees",
   "type": "module",
   "repository": {
     "type": "git",
@@ -18,7 +18,10 @@
     "incremental",
     "parsing",
     "tree-sitter",
-    "nlpplus"
+    "nlpplus",
+    "nlp++",
+    "nlp-plus-plus",
+    "visualtext"
   ],
   "files": [
     "grammar.js",
@@ -28,7 +31,19 @@
     "bindings/node/*",
     "queries/*",
     "src/**",
-    "*.wasm"
+    "*.wasm",
+    "dict/grammar.js",
+    "dict/queries/*",
+    "dict/src/**",
+    "kbb/grammar.js",
+    "kbb/queries/*",
+    "kbb/src/**",
+    "seq/grammar.js",
+    "seq/queries/*",
+    "seq/src/**",
+    "tree/grammar.js",
+    "tree/queries/*",
+    "tree/src/**"
   ],
   "dependencies": {
     "node-addon-api": "^8.5.0",
@@ -52,5 +67,6 @@
     "prestart": "tree-sitter build --wasm",
     "start": "tree-sitter playground",
     "test": "node --test bindings/node/*_test.js"
-  }
+  },
+  "homepage": "https://visualtext.org"
 }

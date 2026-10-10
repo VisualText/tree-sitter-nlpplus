@@ -1,18 +1,10 @@
 (comment) @comment
 
 ; A concept at the left margin, then concepts nested under it.
-(_line
-  .
-  (entry
-    concept: (concept) @module))
-(source_file
-  (entry
-    concept: (concept) @module))
-(source_file
-  (indent)
-  .
-  (entry
-    concept: (concept) @type))
+(entry
+  concept: (concept) @module)
+(nested_entry
+  concept: (concept) @type)
 
 (attribute
   name: (_) @property)
@@ -29,9 +21,13 @@
 
 "," @punctuation.delimiter
 
-(number) @number
-(value) @string.special
+((value) @number
+  (#match? @number "^-?[0-9]+(\\.[0-9]+)?$"))
+((value) @string.special
+  (#not-match? @string.special "^-?[0-9]+(\\.[0-9]+)?$"))
+
 (item) @string.special
+
 (list
   (string) @string)
 (attribute

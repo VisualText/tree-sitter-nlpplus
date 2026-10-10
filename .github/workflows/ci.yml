@@ -1,0 +1,47 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Test
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+
+      - name: Install the tree-sitter CLI
+        run: npm install -g tree-sitter-cli@0.27.0
+
+      # The committed parsers must match their grammars.
+      - name: Generate the parsers
+        shell: bash
+        run: |
+          tree-sitter generate
+          for g in dict kbb seq tree; do (cd "$g" && tree-sitter generate); done
+          git diff --exit-code -- src '*/src'
+
+      - name: Run the tests
+        run: tree-sitter test
+
+      - name: Parse the examples
+        shell: bash
+        run: |
+          tree-sitter parse --quiet --stat examples/*.nlp
+          tree-sitter parse --quiet --stat -p dict examples/*.dict
+          tree-sitter parse --quiet --stat -p kbb examples/*.kbb
+          tree-sitter parse --quiet --stat -p seq examples/analyzer.seq
+          tree-sitter parse --quiet --stat -p tree examples/*.tree

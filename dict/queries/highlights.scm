@@ -9,5 +9,18 @@
 "=" @operator
 
 (string) @string
-(number) @number
-(value) @string.special
+
+((value) @number
+  (#match? @number "^-?[0-9]+(\.[0-9]+)?$"))
+((value) @string.special
+  (#not-match? @string.special "^-?[0-9]+(\.[0-9]+)?$"))
+
+(list
+  (item) @string.special)
+
+[
+  "["
+  "]"
+] @punctuation.bracket
+
+"," @punctuation.delimiter

@@ -1,0 +1,5 @@
+tokenize	nil
+# <- keyword
+#        ^ constant.builtin
+nlp	sentences
+#   ^ function

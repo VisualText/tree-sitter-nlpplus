@@ -1,0 +1,7 @@
+american samoan nationality=1 country="american samoa"
+# <- label
+#        ^ label
+#               ^ property
+#                          ^ operator
+#                           ^ number
+#                                     ^ string

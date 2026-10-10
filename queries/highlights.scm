@@ -39,8 +39,9 @@
   name: (identifier) @attribute)
 (modifier
   value: (identifier) @constant)
+; Words in a match=(...) list are literal text, like rule literals.
 (modifier_list
-  (identifier) @constant)
+  (identifier) @string.special)
 (modifier_list
   (symbol) @string.special)
 

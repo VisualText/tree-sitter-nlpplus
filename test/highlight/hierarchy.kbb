@@ -1,0 +1,7 @@
+degrees
+# <- module
+  bs: name="bachelor of science", synonym=[bsc,sb]
+# ^ type
+#     ^ property
+#          ^ string
+#                                          ^ string.special
