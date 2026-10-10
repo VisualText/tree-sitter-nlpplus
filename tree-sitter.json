@@ -1,0 +1,91 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "nlpplus",
+      "camelcase": "NLPPlus",
+      "title": "NLP++",
+      "scope": "source.nlp",
+      "file-types": [
+        "nlp",
+        "pat"
+      ],
+      "injection-regex": "^(nlp\\+\\+|nlpplus|nlp)$",
+      "class-name": "TreeSitterNLPPlus",
+      "highlights": "queries/highlights.scm",
+      "folds": "queries/folds.scm"
+    },
+    {
+      "name": "nlpplus_dict",
+      "camelcase": "NLPPlusDict",
+      "title": "NLP++ Dictionary",
+      "scope": "source.dict",
+      "path": "dict",
+      "file-types": [
+        "dict"
+      ],
+      "highlights": "dict/queries/highlights.scm",
+      "class-name": "TreeSitterNLPPlusDict"
+    },
+    {
+      "name": "nlpplus_kbb",
+      "camelcase": "NLPPlusKbb",
+      "title": "NLP++ Knowledge Base",
+      "scope": "source.kbb",
+      "path": "kbb",
+      "file-types": [
+        "kbb"
+      ],
+      "highlights": "kbb/queries/highlights.scm",
+      "class-name": "TreeSitterNLPPlusKbb"
+    },
+    {
+      "name": "nlpplus_seq",
+      "camelcase": "NLPPlusSeq",
+      "title": "NLP++ Analyzer Sequence",
+      "scope": "source.seq",
+      "path": "seq",
+      "file-types": [
+        "analyzer.seq"
+      ],
+      "highlights": "seq/queries/highlights.scm",
+      "class-name": "TreeSitterNLPPlusSeq"
+    },
+    {
+      "name": "nlpplus_tree",
+      "camelcase": "NLPPlusTree",
+      "title": "NLP++ Parse Tree",
+      "scope": "source.tree",
+      "path": "tree",
+      "file-types": [
+        "tree"
+      ],
+      "highlights": "tree/queries/highlights.scm",
+      "class-name": "TreeSitterNLPPlusTree"
+    }
+  ],
+  "metadata": {
+    "version": "0.1.0",
+    "license": "MIT",
+    "description": "NLP++ grammars for tree-sitter: pass files, dictionaries, knowledge bases, analyzer sequences and parse trees",
+    "authors": [
+      {
+        "name": "David de Hilster",
+        "email": "dehilster@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/VisualText/tree-sitter-nlpplus",
+      "homepage": "https://visualtext.org"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": false,
+    "zig": false
+  }
+}

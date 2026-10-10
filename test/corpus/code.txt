@@ -1,0 +1,477 @@
+==================
+Variables
+==================
+
+@CODE
+G("a") = L("b");
+N("c", 2) = S("d");
+X("e") = P("f");
+s("g") = 1;
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)
+            (number)))
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (number)))
+    (section_end)))
+
+==================
+Array index
+==================
+
+@CODE
+L("arr")[0] = 1;
+L("v") = G("arr")[L("i") + 1];
+L("list")[] = 2;
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string))
+          (number))
+        (number)))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (variable
+          (variable_scope)
+          (argument_list
+            (string))
+          (binary_expression
+            (variable
+              (variable_scope)
+              (argument_list
+                (string)))
+            (number)))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (number)))
+    (section_end)))
+
+==================
+Semicolons are optional
+==================
+
+@POST
+single()
+noop()
+S("x") = 1
+@RULES
+
+---
+
+(source_file
+  (post_section
+    (section_start)
+    (expression_statement
+      (call_expression
+        (identifier)
+        (argument_list)))
+    (expression_statement
+      (call_expression
+        (identifier)
+        (argument_list)))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (number))))
+  (rules_section
+    (section_start)))
+
+==================
+Operator precedence
+==================
+
+@CODE
+L("x") = 1 + 2 * 3 - 4 / 5 % 6;
+L("y") = L("a") < 1 || L("b") >= 2 && !L("c");
+L("z") = L("p") %% 50;
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (binary_expression
+          (binary_expression
+            (number)
+            (binary_expression
+              (number)
+              (number)))
+          (binary_expression
+            (binary_expression
+              (number)
+              (number))
+            (number)))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (binary_expression
+          (binary_expression
+            (binary_expression
+              (variable
+                (variable_scope)
+                (argument_list
+                  (string)))
+              (number))
+            (binary_expression
+              (variable
+                (variable_scope)
+                (argument_list
+                  (string)))
+              (number)))
+          (unary_expression
+            (variable
+              (variable_scope)
+              (argument_list
+                (string)))))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (binary_expression
+          (variable
+            (variable_scope)
+            (argument_list
+              (string)))
+          (number))))
+    (section_end)))
+
+==================
+Output operator
+==================
+
+@CODE
+"out.txt" << N("$text") << "\n";
+cout << "done" << "\n";
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (binary_expression
+        (binary_expression
+          (string)
+          (variable
+            (variable_scope)
+            (argument_list
+              (string))))
+        (string
+          (escape_sequence))))
+    (expression_statement
+      (binary_expression
+        (binary_expression
+          (identifier)
+          (string))
+        (string
+          (escape_sequence))))
+    (section_end)))
+
+==================
+Increment and decrement
+==================
+
+@CODE
+++G("count");
+G("count")++;
+--L("n");
+L("n")--;
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (update_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))))
+    (expression_statement
+      (update_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))))
+    (expression_statement
+      (update_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))))
+    (expression_statement
+      (update_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))))
+    (section_end)))
+
+==================
+If, else and while
+==================
+
+@CODE
+if (L("x"))
+  L("y") = 1;
+else if (L("z")) {
+  L("y") = 2;
+} else
+  L("y") = 3;
+while (L("n") > 0) {
+  L("n")--;
+}
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (if_statement
+      (parenthesized_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string))))
+      (expression_statement
+        (assignment_expression
+          (variable
+            (variable_scope)
+            (argument_list
+              (string)))
+          (number)))
+      (if_statement
+        (parenthesized_expression
+          (variable
+            (variable_scope)
+            (argument_list
+              (string))))
+        (block
+          (expression_statement
+            (assignment_expression
+              (variable
+                (variable_scope)
+                (argument_list
+                  (string)))
+              (number))))
+        (expression_statement
+          (assignment_expression
+            (variable
+              (variable_scope)
+              (argument_list
+                (string)))
+            (number)))))
+    (while_statement
+      (parenthesized_expression
+        (binary_expression
+          (variable
+            (variable_scope)
+            (argument_list
+              (string)))
+          (number)))
+      (block
+        (expression_statement
+          (update_expression
+            (variable
+              (variable_scope)
+              (argument_list
+                (string)))))))
+    (section_end)))
+
+==================
+Return
+==================
+
+@DECL
+f(L("x")) {
+  if (!L("x"))
+    return;
+  return L("x") * 2;
+}
+@@DECL
+
+---
+
+(source_file
+  (decl_section
+    (section_start)
+    (function_definition
+      (identifier)
+      (parameter_list
+        (variable
+          (variable_scope)
+          (argument_list
+            (string))))
+      (block
+        (if_statement
+          (parenthesized_expression
+            (unary_expression
+              (variable
+                (variable_scope)
+                (argument_list
+                  (string)))))
+          (return_statement))
+        (return_statement
+          (binary_expression
+            (variable
+              (variable_scope)
+              (argument_list
+                (string)))
+            (number)))))
+    (section_end)))
+
+==================
+Calls
+==================
+
+@CODE
+L("con") = findconcept(findroot(), "words");
+L("r") = mylib::helper(&L("out"), 2.5, -1);
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (call_expression
+          (identifier)
+          (argument_list
+            (call_expression
+              (identifier)
+              (argument_list))
+            (string)))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (call_expression
+          (identifier)
+          (identifier)
+          (argument_list
+            (reference)
+            (variable
+              (variable_scope)
+              (argument_list
+                (string)))
+            (float)
+            (unary_expression
+              (number))))))
+    (section_end)))
+
+==================
+Strings and escapes
+==================
+
+@CODE
+L("s") = "say \"hi\"\t\\";
+L("t") = "";
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (string
+          (escape_sequence)
+          (escape_sequence)
+          (escape_sequence)
+          (escape_sequence))))
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (string)))
+    (section_end)))

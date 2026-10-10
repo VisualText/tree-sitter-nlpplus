@@ -1,0 +1,32 @@
+@NODES _ROOT
+# <- keyword.directive
+#      ^ constant.builtin
+
+@POST
+  S("sem") = N("$text", 1);
+# ^ variable.builtin
+#   ^ string
+#            ^ variable.builtin
+#              ^ string.special
+#                       ^ number
+  single();
+# ^ function.builtin
+  mytag(1);
+# ^ function.call
+@RULES
+_date [layer=(_noun)] <- January [s] \, _xNUM @@
+# <- type
+#      ^ attribute
+#             ^ type
+#                     ^ operator
+#                        ^ string.special
+#                                    ^ string.escape
+#                                       ^ constant.builtin
+#                                             ^ punctuation.special
+
+@CODE
+if (G("x") > 1) return;
+# <- keyword.conditional
+#               ^ keyword.return
+@@CODE
+# <- keyword.directive

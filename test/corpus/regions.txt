@@ -1,0 +1,274 @@
+==================
+Code region with closing marker
+==================
+
+@CODE
+G("count") = 0;
+@@CODE
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (number)))
+    (section_end)))
+
+==================
+Lower-case region markers
+==================
+
+@code
+G("x") = 1;
+@@code
+
+---
+
+(source_file
+  (code_section
+    (section_start)
+    (expression_statement
+      (assignment_expression
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (number)))
+    (section_end)))
+
+==================
+Nodes, path and multi
+==================
+
+@NODES _ROOT _TEXTZONE
+@PATH _ROOT _paragraph _sentence
+@MULTI _sentence
+
+---
+
+(source_file
+  (nodes_section
+    (section_start)
+    (node_name)
+    (node_name))
+  (path_section
+    (section_start)
+    (node_name)
+    (node_name)
+    (node_name))
+  (multi_section
+    (section_start)
+    (node_name)))
+
+==================
+Select wrapping nodes
+==================
+
+@SELECT
+@NODES _sentence
+@@NODES
+@@SELECT
+
+---
+
+(source_file
+  (select_section
+    (section_start)
+    (nodes_section
+      (section_start)
+      (node_name)
+      (section_end))
+    (section_end)))
+
+==================
+Function declarations
+==================
+
+@DECL
+addone(L("n")) {
+  return L("n") + 1;
+}
+greet(L("name"), L("out")) {
+  L("out") << "hello " << L("name") << "\n";
+}
+@@DECL
+
+---
+
+(source_file
+  (decl_section
+    (section_start)
+    (function_definition
+      (identifier)
+      (parameter_list
+        (variable
+          (variable_scope)
+          (argument_list
+            (string))))
+      (block
+        (return_statement
+          (binary_expression
+            (variable
+              (variable_scope)
+              (argument_list
+                (string)))
+            (number)))))
+    (function_definition
+      (identifier)
+      (parameter_list
+        (variable
+          (variable_scope)
+          (argument_list
+            (string)))
+        (variable
+          (variable_scope)
+          (argument_list
+            (string))))
+      (block
+        (expression_statement
+          (binary_expression
+            (binary_expression
+              (binary_expression
+                (variable
+                  (variable_scope)
+                  (argument_list
+                    (string)))
+                (string))
+              (variable
+                (variable_scope)
+                (argument_list
+                  (string))))
+            (string
+              (escape_sequence))))))
+    (section_end)))
+
+==================
+Pre, check, post and rules
+==================
+
+@PRE
+<1,1> cap();
+<2,2> length(3)
+@CHECK
+if (N("count", 1) > 3)
+  fail();
+@POST
+single();
+@RULES
+_name <- _xCAP _xCAP @@
+
+---
+
+(source_file
+  (pre_section
+    (section_start)
+    (pre_action
+      (number)
+      (number)
+      (call_expression
+        (identifier)
+        (argument_list)))
+    (pre_action
+      (number)
+      (number)
+      (call_expression
+        (identifier)
+        (argument_list
+          (number)))))
+  (check_section
+    (section_start)
+    (if_statement
+      (parenthesized_expression
+        (binary_expression
+          (variable
+            (variable_scope)
+            (argument_list
+              (string)
+              (number)))
+          (number)))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list)))))
+  (post_section
+    (section_start)
+    (expression_statement
+      (call_expression
+        (identifier)
+        (argument_list))))
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name)))))
+
+==================
+Recurse region
+==================
+
+@RECURSE listarg
+@POST
+rfaarg(1)
+single()
+@RULES
+_ARG [base] <- _NONLIT @@
+@@RECURSE listarg
+
+---
+
+(source_file
+  (recurse_section
+    (section_start)
+    (identifier)
+    (post_section
+      (section_start)
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list
+            (number))))
+      (expression_statement
+        (call_expression
+          (identifier)
+          (argument_list))))
+    (rules_section
+      (section_start)
+      (rule
+        (rule_element
+          (node_name)
+          (modifiers
+            (modifier
+              (identifier))))
+        (rule_element
+          (node_name))))
+    (section_end)
+    (identifier)))
+
+==================
+Comments
+==================
+
+# a line comment
+/* a block
+   comment */
+@NODES _ROOT # trailing
+
+---
+
+(source_file
+  (comment)
+  (comment)
+  (nodes_section
+    (section_start)
+    (node_name))
+  (comment))

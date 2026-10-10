@@ -1,0 +1,213 @@
+==================
+Dictionary entries
+:language(nlpplus_dict)
+==================
+
+# nationalities
+afghan pos=noun iso2=af
+american samoan nationality=1 country="american samoa"
+gaelic iso=2 language=[gaelic,"scottish gaelic"]
+abraca verb=1 root=
+\= s=equals
+
+---
+
+(source_file
+  (comment)
+  (entry
+    (headword
+      (word))
+    (attribute
+      (word)
+      (value))
+    (attribute
+      (word)
+      (value)))
+  (entry
+    (headword
+      (word)
+      (word))
+    (attribute
+      (word)
+      (value))
+    (attribute
+      (word)
+      (string)))
+  (entry
+    (headword
+      (word))
+    (attribute
+      (word)
+      (value))
+    (attribute
+      (word)
+      (list
+        (item)
+        (string))))
+  (entry
+    (headword
+      (word))
+    (attribute
+      (word)
+      (value))
+    (attribute
+      (word)))
+  (entry
+    (headword
+      (word))
+    (attribute
+      (word)
+      (value))))
+
+==================
+Knowledge base hierarchy
+:language(nlpplus_kbb)
+==================
+
+degrees
+  bs: name="bachelor of science", professional=1, synonym=[bsc,sb]
+  "ms": level=master
+    email_count=7
+  # a comment
+
+---
+
+(source_file
+  (entry
+    (concept))
+  (indent)
+  (nested_entry
+    (concept)
+    (attribute
+      (name)
+      (string))
+    (attribute
+      (name)
+      (value))
+    (attribute
+      (name)
+      (list
+        (item)
+        (item))))
+  (indent)
+  (nested_entry
+    (concept
+      (string))
+    (attribute
+      (name)
+      (value)))
+  (indent)
+  (attribute
+    (name)
+    (value))
+  (indent)
+  (comment))
+
+==================
+Analyzer sequence
+:language(nlpplus_seq)
+==================
+
+tokenize	nil	# split into tokens
+pat	sentences
+/nlp	oldPass
+// a comment
+folder	Zones
+
+---
+
+(source_file
+  (pass
+    (pass_type)
+    (nil))
+  (comment)
+  (pass
+    (pass_type)
+    (name))
+  (pass
+    (inactive)
+    (pass_type)
+    (name))
+  (comment)
+  (pass
+    (pass_type)
+    (name)))
+
+==================
+Parse tree
+:language(nlpplus_tree)
+==================
+
+***************
+    PASS 1 (tokenize)
+***************
+_ROOT [0,10,0,10,0,0,node,un]
+   _np [0,6,0,6,8,23,node,fired,blt, ("head" "dog") ("count" 2)]
+      dog [4,6,4,6,0,0,alpha]
+   [ [7,7,7,7,0,0,punct]
+   [8,8,8,8,0,0,white]
+
+---
+
+(source_file
+  (separator)
+  (pass_header)
+  (separator)
+  (node
+    (name)
+    (record
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (type)
+      (flag)))
+  (node
+    (name)
+    (record
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (type)
+      (flag)
+      (flag)
+      (variable
+        (string)
+        (string))
+      (variable
+        (string)
+        (number))))
+  (node
+    (name)
+    (record
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (type)))
+  (node
+    (name)
+    (record
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (type)))
+  (node
+    (record
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (number)
+      (type))))

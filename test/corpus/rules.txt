@@ -1,0 +1,276 @@
+==================
+Simple rule
+==================
+
+@RULES
+_np <- _det _adj _noun @@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name)))))
+
+==================
+Element modifiers
+==================
+
+@RULES
+_date [layer=(_noun _np)] <-
+	_xNUM [s]
+	_xWILD [s star match=(_xWHITE \- )]
+	_xWILD [one match=(January February March)]
+	_xWHITE [min=0 max=1]
+	@@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier)
+            (modifier_list
+              (node_name)
+              (node_name)))))
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier))))
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier))
+          (modifier
+            (identifier))
+          (modifier
+            (identifier)
+            (modifier_list
+              (node_name)
+              (escape_char)))))
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier))
+          (modifier
+            (identifier)
+            (modifier_list
+              (identifier)
+              (identifier)
+              (identifier)))))
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier)
+            (number))
+          (modifier
+            (identifier)
+            (number)))))))
+
+==================
+Literal words, numbers and escaped characters
+==================
+
+@RULES
+_time <- _xNUM \: _xNUM am [opt] 0 [opt] \. @@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name))
+      (rule_element
+        (escape_char))
+      (rule_element
+        (node_name))
+      (rule_element
+        (identifier)
+        (modifiers
+          (modifier
+            (identifier))))
+      (rule_element
+        (number)
+        (modifiers
+          (modifier
+            (identifier))))
+      (rule_element
+        (escape_char)))))
+
+==================
+Modifier values
+==================
+
+@RULES
+_x [base unsealed] <- \n [ren=\n] _y [rename=_z trig] _xWILD [recurse=(a b) fail=("x" 3)] @@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier))
+          (modifier
+            (identifier))))
+      (rule_element
+        (escape_char)
+        (modifiers
+          (modifier
+            (identifier)
+            (escape_char))))
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier)
+            (node_name))
+          (modifier
+            (identifier))))
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier)
+            (modifier_list
+              (identifier)
+              (identifier)))
+          (modifier
+            (identifier)
+            (modifier_list
+              (string)
+              (number))))))))
+
+==================
+Attribute match
+==================
+
+@RULES
+_money <- _xWILD [one match=(_xVAR("cursym") _xVAR(curcode))] _xNUM @@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name)
+        (modifiers
+          (modifier
+            (identifier))
+          (modifier
+            (identifier)
+            (modifier_list
+              (attribute_match
+                (node_name)
+                (string))
+              (attribute_match
+                (node_name)
+                (identifier))))))
+      (rule_element
+        (node_name)))))
+
+==================
+Star shorthand
+==================
+
+@RULES
+_list <- _item [*] @@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (node_name)
+        (modifiers)))))
+
+==================
+Symbols and other scripts
+==================
+
+@RULES
+_quote <- “ _xWILD ” @@
+_पुरस् <- ± @@
+_😀 <- 😀 @@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (symbol))
+      (rule_element
+        (node_name))
+      (rule_element
+        (symbol)))
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (symbol)))
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (symbol)))))
+
+==================
+Several rules and a null suggested node
+==================
+
+@RULES
+_xNIL <- today @@
+_xNIL <- yesterday @@
+
+---
+
+(source_file
+  (rules_section
+    (section_start)
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (identifier)))
+    (rule
+      (rule_element
+        (node_name))
+      (rule_element
+        (identifier)))))
