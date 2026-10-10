@@ -6,6 +6,7 @@
       "camelcase": "NLPPlus",
       "title": "NLP++",
       "scope": "source.nlp",
+      "path": ".",
       "file-types": [
         "nlp",
         "pat"
@@ -65,7 +66,7 @@
     }
   ],
   "metadata": {
-    "version": "0.1.0",
+    "version": "0.1.1",
     "license": "MIT",
     "description": "NLP++ grammars for tree-sitter: pass files, dictionaries, knowledge bases, analyzer sequences and parse trees",
     "authors": [

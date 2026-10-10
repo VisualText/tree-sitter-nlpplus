@@ -1,6 +1,6 @@
 LANGUAGE_NAME := tree-sitter-nlpplus
 HOMEPAGE_URL := https://github.com/VisualText/tree-sitter-nlpplus
-VERSION := 0.1.0
+VERSION := 0.1.1
 DESCRIPTION := NLP++ grammar for tree-sitter
 
 # repository

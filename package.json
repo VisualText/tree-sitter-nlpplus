@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-nlpplus",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "NLP++ grammars for tree-sitter: pass files, dictionaries, knowledge bases, analyzer sequences and parse trees",
   "type": "module",
   "repository": {
