@@ -5,37 +5,37 @@ on:
     branches: [main]
   pull_request:
 
+concurrency:
+  group: ${{github.workflow}}-${{github.ref}}
+  cancel-in-progress: true
+
 permissions:
   contents: read
 
 jobs:
   test:
-    name: Test
-    runs-on: ${{ matrix.os }}
+    name: Test parsers
+    runs-on: ${{matrix.os}}
     strategy:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
     steps:
-      - uses: actions/checkout@v5
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
-      - uses: actions/setup-node@v5
+      # Pinned so the committed parsers match what the check regenerates.
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
         with:
-          node-version: 22
+          tree-sitter-ref: v0.27.0
 
-      - name: Install the tree-sitter CLI
-        run: npm install -g tree-sitter-cli@0.27.0
-
-      # The committed parsers must match their grammars.
-      - name: Generate the parsers
-        shell: bash
-        run: |
-          tree-sitter generate
-          for g in dict kbb seq tree; do (cd "$g" && tree-sitter generate); done
-          git diff --exit-code -- src '*/src'
-
-      - name: Run the tests
-        run: tree-sitter test
+      # Regenerates every grammar, checks the committed parsers match, and
+      # runs the parse and highlight tests.
+      - name: Run tests
+        uses: tree-sitter/parser-test-action@v3
+        with:
+          test-rust: ${{runner.os == 'Linux'}}
 
       - name: Parse the examples
         shell: bash
@@ -45,3 +45,31 @@ jobs:
           tree-sitter parse --quiet --stat -p kbb examples/*.kbb
           tree-sitter parse --quiet --stat -p seq examples/analyzer.seq
           tree-sitter parse --quiet --stat -p tree examples/*.tree
+
+  query:
+    name: Validate queries
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Set up tree-sitter
+        uses: tree-sitter/setup-action/cli@v2
+        with:
+          tree-sitter-ref: v0.27.0
+
+      - name: Build parsers
+        run: |
+          mkdir -p parsers
+          tree-sitter build -o parsers/nlpplus.so .
+          for g in dict kbb seq tree; do
+            tree-sitter build -o "parsers/nlpplus_$g.so" "$g"
+          done
+
+      - name: Set up ts_query_ls
+        run: curl -fL https://github.com/ribru17/ts_query_ls/releases/download/v3.16.0/ts_query_ls-x86_64-unknown-linux-gnu.tar.gz | tar -xz
+
+      # Captures and predicates are checked against nvim-treesitter's lists
+      # (.tsqueryrc.json).
+      - name: Check queries
+        run: ./ts_query_ls check -f queries dict/queries kbb/queries seq/queries tree/queries
