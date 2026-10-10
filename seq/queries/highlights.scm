@@ -1,7 +1,9 @@
 (comment) @comment
 
 (pass_type) @keyword
+
 (nil) @constant.builtin
+
 (number) @number
 
 (pass

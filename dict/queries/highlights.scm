@@ -11,9 +11,10 @@
 (string) @string
 
 ((value) @number
-  (#match? @number "^-?[0-9]+(\.[0-9]+)?$"))
+  (#match? @number "^-?[0-9]+([.][0-9]+)?$"))
+
 ((value) @string.special
-  (#not-match? @string.special "^-?[0-9]+(\.[0-9]+)?$"))
+  (#not-match? @string.special "^-?[0-9]+([.][0-9]+)?$"))
 
 (list
   (item) @string.special)

@@ -3,6 +3,7 @@
 ; A concept at the left margin, then concepts nested under it.
 (entry
   concept: (concept) @module)
+
 (nested_entry
   concept: (concept) @type)
 
@@ -23,6 +24,7 @@
 
 ((value) @number
   (#match? @number "^-?[0-9]+(\\.[0-9]+)?$"))
+
 ((value) @string.special
   (#not-match? @string.special "^-?[0-9]+(\\.[0-9]+)?$"))
 
@@ -30,5 +32,6 @@
 
 (list
   (string) @string)
+
 (attribute
   value: (string) @string)
