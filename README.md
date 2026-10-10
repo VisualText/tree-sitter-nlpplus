@@ -102,6 +102,17 @@ source = { git = "https://github.com/VisualText/tree-sitter-nlpplus", rev = "b52
 Use the latest commit for `rev`. Then run `hx --grammar fetch` and `hx --grammar build`. Finally, copy `queries/highlights.scm` to
 `~/.config/helix/runtime/queries/nlpplus/`.
 
+### Emacs
+
+[nlpplus-ts-mode](https://github.com/VisualText/nlpplus-ts-mode) provides modes for all five
+grammars. `M-x nlpplus-ts-mode-install-grammars` installs the grammars. If your Emacs's
+tree-sitter library only loads ABI 14 parsers, as in the official Windows build of Emacs 30, the
+command uses the `abi-14` branch, which CI regenerates from `main` on every push.
+
+### Zed
+
+Install the [NLP++ extension](https://github.com/VisualText/zed-nlpplus).
+
 ## Development
 
 ```sh
